@@ -1,0 +1,112 @@
+import { useEffect, useState } from "react";
+import Button from "./components/shared/Button";
+import Input from "./components/shared/Input";
+import TodoItem from "./components/TodoItem";
+import api from "./utils/api";
+import { type Task } from "./types/todo";
+
+function App() {
+  const [taskValue, setTaskValue] = useState<string>("");
+  const [tasks, setTasks] = useState<Task[]>([]);
+  const [isCompletedState, setIsCompletedState] = useState<boolean>(false);
+  const fetchTasks = async () => {
+    try {
+      const response = await api.get("/task");
+      setTasks(response.data.tasks);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    const fetchAndSetTasks = async () => {
+      await fetchTasks();
+    };
+    fetchAndSetTasks();
+  }, []);
+
+  const handleCreate = async () => {
+    try {
+      const response = await api.post("/task", {
+        task: taskValue,
+        isCompleted: false,
+      });
+      if (response.status === 200) {
+        setTaskValue("");
+        await fetchTasks();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleUpdate = async (id: string) => {
+    try {
+      const response = await api.put(`/task/${id}`, {
+        isCompleted: !isCompletedState,
+      });
+      // console.log(response);
+      if (response.status === 200) {
+        setIsCompletedState(response.data.tasks.isCompleted);
+        await fetchTasks();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleDelete = async (id: string) => {
+    try {
+      const response = await api.delete(`/task/${id}`);
+      if (response.status === 200) {
+        await fetchTasks();
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex flex-col justify-center items-center bg-violet-50 p-5">
+      <div className="w-full max-w-lg bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+        <div className="flex flex-col gap-8">
+          {/* Header */}
+          <div className="text-center">
+            <h1 className="text-3xl font-extrabold text-violet-600">
+              My Todo List
+            </h1>
+            <p className="text-sm text-gray-400 mt-1">오늘도 화이팅!</p>
+          </div>
+
+          {/* Input Section */}
+          <div className="flex w-full gap-3">
+            <Input value={taskValue} setValue={setTaskValue} name="task" />
+            <Button onClick={handleCreate} />
+          </div>
+
+          {/* Todo List */}
+          <div className="flex flex-col gap-3">
+            {tasks.length === 0 ? (
+              <div className="text-center py-8 text-gray-400">
+                <p>할 일이 없습니다</p>
+                <p className="text-sm mt-1">새로운 할 일을 추가해보세요!</p>
+              </div>
+            ) : (
+              tasks.map((t, index) => {
+                return (
+                  <TodoItem
+                    key={`${t.task}-${index}`}
+                    task={t.task}
+                    isCompleted={t.isCompleted}
+                    handleToggle={() => handleUpdate(t._id)}
+                    handleDelete={() => handleDelete(t._id)}
+                  />
+                );
+              })
+            )}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default App;
