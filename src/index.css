@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+/* 모바일 터치 최적화 */
+@layer base {
+  /* 터치 디바이스에서 탭 하이라이트 제거 */
+  * {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* 터치 디바이스 최적화 */
+  @media (hover: none) {
+    button {
+      cursor: default;
+    }
+  }
+}

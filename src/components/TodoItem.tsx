@@ -68,7 +68,8 @@ const TodoItem = ({
 
           {/* 삭제 버튼 */}
           <button
-            className="p-2 rounded-xl text-gray-400 hover:text-rose-500 hover:bg-rose-50 transition-all duration-200 cursor-pointer opacity-0 group-hover:opacity-100"
+            className="p-2 rounded-xl text-gray-300 hover:text-rose-500 hover:bg-rose-50 active:bg-rose-100 transition-all duration-200 cursor-pointer 
+              md:opacity-0 md:group-hover:opacity-100"
             title="삭제"
             onClick={handleDelete}
           >

@@ -10,9 +10,6 @@ function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isCompletedState, setIsCompletedState] = useState<boolean>(false);
 
-  const notify = (message: string) => {
-    toast.info(message);
-  };
   const fetchTasks = async () => {
     try {
       const response = await api.get("/task");
@@ -73,8 +70,8 @@ function App() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col justify-center items-center bg-violet-50 p-5">
-        <div className="w-full max-w-lg bg-white rounded-3xl shadow-xl p-8 border border-gray-100">
+      <div className="min-h-screen flex flex-col bg-violet-400 p-3 lg:p-5">
+        <div className="bg-purple-50 w-full max-w-lg lg:mx-auto flex-1 rounded-3xl shadow-xl p-8 border border-gray-100">
           <div className="flex flex-col gap-8">
             {/* Header */}
             <div className="text-center">
@@ -86,7 +83,12 @@ function App() {
 
             {/* Input Section */}
             <div className="flex w-full gap-3">
-              <Input value={taskValue} setValue={setTaskValue} name="task" />
+              <Input
+                value={taskValue}
+                setValue={setTaskValue}
+                name="task"
+                onEnter={handleCreate}
+              />
               <Button onClick={handleCreate}>
                 <svg
                   className="w-5 h-5"
@@ -114,15 +116,13 @@ function App() {
               ) : (
                 tasks.map((t, index) => {
                   return (
-                    <>
-                      <TodoItem
-                        key={`${t.task}-${index}`}
-                        task={t.task}
-                        isCompleted={t.isCompleted}
-                        handleToggle={() => handleUpdate(t._id)}
-                        handleDelete={() => handleDelete(t._id)}
-                      />
-                    </>
+                    <TodoItem
+                      key={`${t.task}-${index}`}
+                      task={t.task}
+                      isCompleted={t.isCompleted}
+                      handleToggle={() => handleUpdate(t._id)}
+                      handleDelete={() => handleDelete(t._id)}
+                    />
                   );
                 })
               )}
@@ -130,6 +130,7 @@ function App() {
           </div>
         </div>
         <ToastContainer
+          className="w-4/5"
           position="bottom-center"
           autoClose={3000}
           hideProgressBar={true}
