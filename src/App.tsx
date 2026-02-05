@@ -8,7 +8,6 @@ import { ToastContainer, toast } from "react-toastify";
 function App() {
   const [taskValue, setTaskValue] = useState<string>("");
   const [tasks, setTasks] = useState<Task[]>([]);
-  const [isCompletedState, setIsCompletedState] = useState<boolean>(false);
 
   const fetchTasks = async () => {
     try {
@@ -42,13 +41,14 @@ function App() {
     }
   };
   const handleUpdate = async (id: string) => {
+    const task = tasks.find((t) => t._id === id);
+    if (!task) return;
     try {
       const response = await api.put(`/task/${id}`, {
-        isCompleted: !isCompletedState,
+        isCompleted: !task.isCompleted,
       });
-      // console.log(response);
+      console.log(response);
       if (response.status === 200) {
-        setIsCompletedState(response.data.tasks.isCompleted);
         await fetchTasks();
         toast.success("할일을 완료했습니다.");
       }
