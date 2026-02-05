@@ -50,7 +50,11 @@ function App() {
       console.log(response);
       if (response.status === 200) {
         await fetchTasks();
-        toast.success("할일을 완료했습니다.");
+        toast.success(
+          !task.isCompleted
+            ? "할일을 완료했습니다."
+            : "진행중으로 변경했습니다."
+        );
       }
     } catch (error) {
       console.error(error);
