@@ -39,7 +39,7 @@ function App() {
           </PrivateRoute>
         }
       />
-      <Route path="/" element={<LoginPage user={user} />} />
+      <Route path="/" element={<LoginPage user={user} setUser={setUser} />} />
       <Route path="/signup" element={<SignUpPage />} />
     </Routes>
   );
