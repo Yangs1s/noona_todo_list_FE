@@ -75,7 +75,7 @@ const ToDoListPage = () => {
                 return (
                   <TodoItem
                     key={`${t.task}-${index}`}
-                    authorName={t?.author?.name}
+                    authorName={t.author?.name}
                     task={t.task}
                     isCompleted={t.isCompleted}
                     handleToggle={() => handleUpdateTask(t._id)}
