@@ -23,6 +23,7 @@ const ToDoListPage = () => {
     fetchAndSetTasks();
   }, []);
 
+  console.log(tasks);
   return (
     <Layout>
       <div className="bg-purple-50 w-full max-w-lg lg:mx-auto min-h-[60dvh] rounded-3xl shadow-xl p-8 border border-gray-100">
@@ -70,10 +71,11 @@ const ToDoListPage = () => {
               </div>
             ) : (
               tasks?.map((t, index) => {
+                // console.log(t);
                 return (
                   <TodoItem
                     key={`${t.task}-${index}`}
-                    authorName={t.author.name}
+                    authorName={t?.author?.name}
                     task={t.task}
                     isCompleted={t.isCompleted}
                     handleToggle={() => handleUpdateTask(t._id)}

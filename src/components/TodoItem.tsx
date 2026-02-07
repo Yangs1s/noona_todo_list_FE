@@ -11,6 +11,7 @@ const TodoItem = ({
   handleToggle: () => void;
   handleDelete: () => void;
 }) => {
+  console.log(authorName);
   return (
     <div
       className={`group rounded-2xl px-5 py-4 transition-all duration-300 ${
