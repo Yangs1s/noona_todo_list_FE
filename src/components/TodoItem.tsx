@@ -1,11 +1,13 @@
 const TodoItem = ({
   task,
   isCompleted,
+  authorName,
   handleToggle,
   handleDelete,
 }: {
   task: string;
   isCompleted: boolean;
+  authorName: string;
   handleToggle: () => void;
   handleDelete: () => void;
 }) => {
@@ -44,13 +46,16 @@ const TodoItem = ({
               </svg>
             )}
           </button>
-          <span
-            className={`text-sm transition-all duration-300 truncate ${
-              isCompleted ? "line-through text-gray-400" : "text-gray-700"
-            }`}
-          >
-            {task}
-          </span>
+          <div className="flex flex-col min-w-0">
+            <span
+              className={`text-sm transition-all duration-300 truncate ${
+                isCompleted ? "line-through text-gray-400" : "text-gray-700"
+              }`}
+            >
+              {task}
+            </span>
+            <span className="text-xs text-gray-400">{authorName}</span>
+          </div>
         </div>
 
         {/* Action Buttons */}
