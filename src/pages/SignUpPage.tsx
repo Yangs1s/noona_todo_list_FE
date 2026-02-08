@@ -101,13 +101,13 @@ const SignUpPage = ({ user }: { user: User | null }) => {
           <Button
             type="submit"
             className="w-full"
-            // disabled={
-            //   !email ||
-            //   !username ||
-            //   !password ||
-            //   !passwordConfirm ||
-            //   !isEmailChecked ||
-            // }
+            disabled={
+              // !email ||
+              // !username ||
+              // !password ||
+              // !passwordConfirm ||
+              !isEmailChecked
+            }
           >
             가입하기
           </Button>
