@@ -7,6 +7,7 @@ import { Link, Navigate, useNavigate } from "react-router-dom";
 import api from "../utils/api";
 import { toast } from "react-toastify";
 import type { User } from "../types/user";
+import { AxiosError } from "axios";
 
 const LoginPage = ({
   user,
@@ -17,6 +18,7 @@ const LoginPage = ({
 }) => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -31,7 +33,9 @@ const LoginPage = ({
         localStorage.setItem("token", response.data.token);
       }
     } catch (error) {
-      console.error(error);
+      if (error instanceof AxiosError) {
+        setError(error.response?.data?.message);
+      }
     }
   };
   if (user) {
@@ -67,6 +71,7 @@ const LoginPage = ({
           <Button type="submit" className="w-full">
             로그인
           </Button>
+          {error && <span className="text-red-500">{error}</span>}
         </form>
         <div className="w-full flex justify-center">
           <div className="space-x-2">

@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 export const useTask = () => {
   const [taskValue, setTaskValue] = useState<string>("");
   const [tasks, setTasks] = useState<Task[]>([]);
+
   const fetchTasks = async () => {
     try {
       const response = await api.get("/task");

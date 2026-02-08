@@ -4,7 +4,7 @@ import Button from "../components/shared/Button";
 import Input from "../components/shared/Input";
 import TodoItem from "../components/TodoItem";
 import Layout from "../components/layout/Layout";
-import LogoutButton from "../components/LogoutButtont";
+import LogoutButton from "../components/LogoutButton";
 
 const ToDoListPage = () => {
   const {
