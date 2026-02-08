@@ -4,6 +4,7 @@ import Button from "../components/shared/Button";
 import Input from "../components/shared/Input";
 import TodoItem from "../components/TodoItem";
 import Layout from "../components/layout/Layout";
+import LogoutButton from "../components/LogoutButtont";
 
 const ToDoListPage = () => {
   const {
@@ -26,8 +27,8 @@ const ToDoListPage = () => {
   console.log(tasks);
   return (
     <Layout>
-      <div className="bg-purple-50 w-full max-w-lg lg:mx-auto min-h-[60dvh] rounded-3xl shadow-xl p-8 border border-gray-100">
-        <div className="flex flex-col gap-8">
+      <div className="bg-purple-50 relative w-full max-w-lg lg:mx-auto min-h-[60dvh] rounded-3xl shadow-xl p-8 border border-gray-100">
+        <div className="space-y-8">
           {/* Header */}
           <div className="text-center">
             <h1 className="text-3xl font-extrabold text-violet-600">
@@ -85,6 +86,7 @@ const ToDoListPage = () => {
               })
             )}
           </div>
+          <LogoutButton />
         </div>
       </div>
     </Layout>

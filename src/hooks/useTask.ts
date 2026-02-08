@@ -20,8 +20,9 @@ export const useTask = () => {
         isCompleted: false,
       });
       if (response.status === 200) {
+        console.log(response);
         setTasks((prev) => [...prev, response.data.tasks]);
-      
+        fetchTasks();
         setTaskValue("");
         // authorization header 추가
 
