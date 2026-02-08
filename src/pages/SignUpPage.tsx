@@ -3,15 +3,19 @@ import Layout from "../components/layout/Layout";
 import Input from "../components/shared/Input";
 import { LockIcon, MailIcon, UserIcon } from "../components/icons";
 import Button from "../components/shared/Button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import api from "../utils/api";
 import { toast } from "react-toastify";
+import { AxiosError } from "axios";
+import { EmailCheckButton } from "../components/EmailCheckButton";
+import { type User } from "../types/user";
 
-const SignUpPage = () => {
+const SignUpPage = ({ user }: { user: User | null }) => {
   const [username, setUsername] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [passwordConfirm, setPasswordConfirm] = useState<string>("");
+  const [isEmailChecked, setIsEmailChecked] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
@@ -32,9 +36,15 @@ const SignUpPage = () => {
         navigate("/");
       }
     } catch (error) {
-      console.error(error);
+      if (error instanceof AxiosError) {
+        toast.error(error.response?.data?.message);
+      }
     }
   };
+
+  if (user) {
+    return <Navigate to="/todo" />;
+  }
   return (
     <Layout>
       <div className="bg-purple-50 space-y-12 w-full max-w-md lg:mx-auto min-h-[50dvh] rounded-[40px] shadow-xl p-8 border border-gray-100">
@@ -61,6 +71,10 @@ const SignUpPage = () => {
             setValue={setEmail}
             placeholder="example@email.com"
           />
+          <EmailCheckButton
+            email={email}
+            setIsEmailChecked={setIsEmailChecked}
+          />
           <Input
             icon={<LockIcon />}
             label="비밀번호"
@@ -79,7 +93,22 @@ const SignUpPage = () => {
             setValue={setPasswordConfirm}
             placeholder="비밀번호를 입력해주세요"
           />
-          <Button type="submit" className="w-full">
+          {passwordConfirm && password !== passwordConfirm && (
+            <span className="text-red-500 text-sm">
+              비밀번호가 일치하지 않습니다
+            </span>
+          )}
+          <Button
+            type="submit"
+            className="w-full"
+            // disabled={
+            //   !email ||
+            //   !username ||
+            //   !password ||
+            //   !passwordConfirm ||
+            //   !isEmailChecked ||
+            // }
+          >
             가입하기
           </Button>
         </form>

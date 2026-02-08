@@ -35,12 +35,12 @@ function App() {
         path="/todo"
         element={
           <PrivateRoute user={user}>
-            <ToDoListPage />
+            <ToDoListPage setUser={setUser} />
           </PrivateRoute>
         }
       />
       <Route path="/" element={<LoginPage user={user} setUser={setUser} />} />
-      <Route path="/signup" element={<SignUpPage />} />
+      <Route path="/signup" element={<SignUpPage user={user} />} />
     </Routes>
   );
 }

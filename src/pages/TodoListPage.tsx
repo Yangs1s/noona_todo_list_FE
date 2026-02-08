@@ -6,7 +6,7 @@ import TodoItem from "../components/TodoItem";
 import Layout from "../components/layout/Layout";
 import LogoutButton from "../components/LogoutButton";
 
-const ToDoListPage = () => {
+const ToDoListPage = ({ setUser }: { setUser: (user: null) => void }) => {
   const {
     tasks,
     taskValue,
@@ -86,7 +86,7 @@ const ToDoListPage = () => {
               })
             )}
           </div>
-          <LogoutButton />
+          <LogoutButton setUser={setUser} />
         </div>
       </div>
     </Layout>

@@ -1,12 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
-const LogoutButton = () => {
-  const navigate = useNavigate();
+
+const LogoutButton = ({ setUser }: { setUser: (user: null) => void }) => {
   const handleLogout = async () => {
     const response = await api.get("/user/logout");
-    localStorage.removeItem("token");
     if (response.status === 200) {
-      navigate("/");
+      localStorage.removeItem("token");
+      setUser(null);
     }
   };
   return (
